@@ -161,4 +161,10 @@ h1, h2, h3 { font-family: var(--font-display); }
 .work-card__tags { display: flex; gap: 8px; flex-wrap: wrap; }
 .work-card__tags span { font-size: 11px; padding: 5px 12px; border-radius: 999px; background: rgba(255,255,255,.14); color: #fff; border: 1px solid rgba(255,255,255,.2); }
 
+/* ============ Tech stack orbit ============ */
+.orbit { display: flex; flex-wrap: wrap; justify-content: center; gap: 28px; margin-top: 60px; padding: 0 20px; }
+.orbit-item { display: flex; align-items: center; justify-content: center; min-width: 110px; padding: 14px 20px; border-radius: 999px; background: rgba(255,255,255,.04); border: 1px solid var(--border); font-family: var(--font-mono); font-size: 13px; color: #e5e5e5; }
+.orbit-item:nth-child(odd) { transform: translateY(-16px); }
+.orbit-item:nth-child(even) { transform: translateY(14px); }
+
 /* STYLE_INSERT_POINT */
