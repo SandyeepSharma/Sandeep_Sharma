@@ -183,4 +183,12 @@ h1, h2, h3 { font-family: var(--font-display); }
 .chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
 .chip { font-size: 12px; padding: 7px 14px; border-radius: 999px; background: rgba(255,255,255,.05); border: 1px solid var(--border); color: #d4d4d4; }
 
+/* ============ Education ============ */
+.edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
+.edu-item { margin-bottom: 20px; }
+.edu-item h3 { font-size: 16px; margin-bottom: 4px; }
+.edu-item p { font-size: 13px; color: #52525b; }
+.edu-highlights { display: flex; flex-direction: column; gap: 8px; margin-top: 20px; font-size: 13px; color: #3f3f46; }
+.cert-list li { font-size: 14px; padding: 10px 0; border-bottom: 1px solid rgba(13,13,13,.1); color: #27272a; }
+
 /* STYLE_INSERT_POINT */
