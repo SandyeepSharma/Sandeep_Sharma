@@ -87,19 +87,19 @@
     if (!body) return;
     var logSets = [
       [
-        { text: '&gt; analyzing_hotspots.py', cls: 'dim' },
-        { text: 'ranked_lever: switch_supplier', cls: '' },
-        { text: '&Delta;co2e: <span class="hl2">-8.4 tCO2e/yr</span>', cls: '' }
+        { text: '&gt; whoami', cls: 'dim' },
+        { text: 'Sandeep Sharma', cls: '' },
+        { text: '<span class="hl2">Principal AI Developer/Engineer</span>', cls: '' }
       ],
       [
-        { text: '&gt; rag_query.py --k=5', cls: 'dim' },
-        { text: 'searching 135 docs...', cls: '' },
-        { text: 'citations: <span class="hl2">5/5 grounded</span>', cls: '' }
+        { text: '&gt; stack --top', cls: 'dim' },
+        { text: 'GPT-4o &middot; LangChain &middot; RAG', cls: '' },
+        { text: '<span class="hl2">PyTorch &middot; FastAPI &middot; AWS</span>', cls: '' }
       ],
       [
-        { text: '&gt; validate_constraints.py', cls: 'dim' },
-        { text: 'checking 133 rules...', cls: '' },
-        { text: 'status: <span class="hl2">FEASIBLE</span>', cls: '' }
+        { text: '&gt; career --highlights', cls: 'dim' },
+        { text: '8+ yrs building AI/ML systems', cls: '' },
+        { text: '<span class="hl2">Agents &middot; GenAI &middot; MLOps</span>', cls: '' }
       ]
     ];
     var setIdx = 0;

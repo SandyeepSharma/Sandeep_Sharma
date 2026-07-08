@@ -118,7 +118,8 @@ h1, h2, h3 { font-family: var(--font-display); }
 .hero-dashboard__title .sq { width: 16px; height: 16px; border-radius: 5px; background: linear-gradient(135deg, var(--accent), var(--accent-soft)); }
 .hero-dashboard__badge { font-size: 9px; padding: 4px 10px; border-radius: 999px; background: rgba(94,234,212,.14); color: var(--accent-teal); border: 1px solid rgba(94,234,212,.3); }
 .hero-dashboard__rows { display: flex; flex-direction: column; gap: 8px; }
-.hero-dashboard__row { display: flex; justify-content: space-between; align-items: center; gap: 8px; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.06); border-radius: 8px; padding: 9px 12px; }
+.hero-dashboard__row { display: flex; justify-content: space-between; align-items: center; gap: 8px; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.06); border-radius: 8px; padding: 9px 12px; transition: var(--transition); }
+.hero-dashboard__row:hover { background: rgba(255,255,255,.08); border-color: rgba(255,106,43,.4); }
 .hero-dashboard__row .name { font-size: 11px; color: #e5e5e5; flex: 1; }
 .hero-dashboard__row .meta { font-size: 10px; color: #9a9a9a; }
 .hero-dashboard__row .score { font-size: 11px; font-weight: 700; color: var(--accent-teal); }
