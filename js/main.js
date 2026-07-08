@@ -153,6 +153,53 @@
 
   registerInit(initHeroTerminal);
   registerInit(initHeroScrollFade);
+
+  function initAboutPhotoParallax() {
+    var frame = document.querySelector('.about-photo__frame');
+    if (!frame || prefersReducedMotion) return;
+    frame.addEventListener('mousemove', function (e) {
+      var rect = frame.getBoundingClientRect();
+      var x = ((e.clientX - rect.left) / rect.width) - 0.5;
+      var y = ((e.clientY - rect.top) / rect.height) - 0.5;
+      frame.style.transform = 'rotate(' + (x * 6) + 'deg) translate(' + (x * 8) + 'px,' + (y * 8) + 'px)';
+    });
+    frame.addEventListener('mouseleave', function () {
+      frame.style.transform = '';
+    });
+  }
+
+  function initStatCounters() {
+    var row = document.querySelector('.stat-row');
+    if (!row) return;
+    var nums = row.querySelectorAll('.stat__num');
+    if (prefersReducedMotion) {
+      nums.forEach(function (el) { el.textContent = el.getAttribute('data-target'); });
+      return;
+    }
+    var counted = false;
+    var observer = new IntersectionObserver(function (entries, obs) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting && !counted) {
+          counted = true;
+          nums.forEach(function (el) {
+            var target = parseInt(el.getAttribute('data-target'), 10);
+            var cur = 0;
+            var step = Math.max(1, Math.round(target / 30));
+            var t = setInterval(function () {
+              cur += step;
+              if (cur >= target) { cur = target; clearInterval(t); }
+              el.textContent = cur;
+            }, 30);
+          });
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.4 });
+    observer.observe(row);
+  }
+
+  registerInit(initAboutPhotoParallax);
+  registerInit(initStatCounters);
   // SECTION: REGISTER_HOOKS
 
   document.addEventListener('DOMContentLoaded', function () {
