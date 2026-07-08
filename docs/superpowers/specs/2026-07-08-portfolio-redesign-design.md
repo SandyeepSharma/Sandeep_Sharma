@@ -8,14 +8,15 @@ This spec covers a ground-up rebuild: new visual design, new content (sourced fr
 
 ## Goals
 
-- Replace the dated template with a modern, "glossy," creative-portfolio-grade design
+- Replace the dated template with a modern, "glossy," creative-portfolio-grade design that visually reads as *built by* an AI engineer, not just describing one
 - Update all content to match the current resume (role, employer, experience, skills, education, certifications)
-- Add scroll-driven motion (reveal animations, floating parallax imagery, animated counters) so the page feels alive while scrolling
-- Keep the zero-build deploy model — plain HTML/CSS/JS, no bundler, no framework
+- Add rich scroll-driven and ambient motion (reveal animations, floating/glowing imagery, a live WebGL element, animated counters) so the page feels alive
+- Keep the zero-build deploy model — no bundler, no `node_modules`, no framework. Plain HTML/CSS/JS is the base, freely augmented with CDN-loaded libraries (e.g. Three.js) where they materially improve the result — still just static files served as-is on GitHub Pages
 
 ## Non-goals
 
-- No CMS, no build tooling (Vite/webpack/etc.), no JS framework (React/Vue/etc.)
+- No CMS, no build tooling (Vite/webpack/etc.), no JS framework (React/Vue/etc.), no `npm install` step
+- No real/live AI feature (no chat widget, no backend, no API keys) — explicitly decided against; the "AI engineer" signature is conveyed visually (see **Signature element** below), not functionally
 - No blog (the template's unused `single.html`/blog section is not being revived)
 - Not attempting to fix the GitHub push-access problem in this spec — see **Deployment** below
 
@@ -24,13 +25,18 @@ This spec covers a ground-up rebuild: new visual design, new content (sourced fr
 ### References
 - Primary color/mood reference: a dark, bold "creative agency" portfolio (black background, orange accent, oversized display type, numbered feature cards, arc-shaped image gallery)
 - Layout/motion reference: [alethia.earth](https://www.alethia.earth/) — cinematic floating hero imagery (a main image with smaller fragments floating around it at different depths/scales), alternating full-bleed dark/light sections, small monospace uppercase pill labels as section eyebrows, large rounded-corner photo cards for case studies with bottom-left text overlay on a gradient scrim, a circular "scroll to discover" cue, and pinned/crossfading headline transitions between sections
+- Atmosphere/product reference: [cosmoq.framer.website](https://cosmoq.framer.website/) — aurora-gradient background glow with film grain, a centered pill-shaped nav, glossy glass-sphere floating elements (gradient + specular highlight, replacing flatter floating shapes), and a floating glass "product/dashboard preview" card that peeks into the hero from below a fold
 
-The final direction combines both: **Alethia's layout and motion language, rendered in the black + orange palette.**
+The final direction combines all three: **Alethia's + Cosmoq's layout and motion language (aurora glow, floating glass elements, dashboard-preview card), rendered in the black + orange palette**, with a live WebGL node-graph (Three.js, via CDN) as an additional hero element.
+
+### Signature element: the floating "dashboard preview" card
+The single strongest way to make the site feel *built by* the person it describes: a floating glass panel in the hero, styled like a real product UI, previewing actual ranked output from the Decarbonisation Engine (e.g. "#1 Switch supplier — frame rails · -8.4 tCO2e/yr · 92%"). It's static/mocked data, not a live API call (per the visual-only decision above) — but it reads as a real screenshot of a real system, which does more to establish credibility than an icon or a stock illustration would.
 
 ### Palette
-- Background: `#0d0d0d` (near-black), with select sections stepping to `#111111`/white for rhythm (alternating dark/light, not one flat black page)
+- Background: `#0d0d0d`/`#050505` (near-black), with select sections stepping to `#111111`/white for rhythm (alternating dark/light, not one flat black page)
 - Text: white (`#ffffff`) primary, `#9a9a9a` muted secondary
-- Accent: orange `#ff6a2b` (buttons, pill labels, headline highlight words, active states)
+- Accent: orange `#ff6a2b` (buttons, pill labels, headline highlight words, active states, aurora glow, orb gradients)
+- Hero-only accent glints: small amounts of teal (`#5eead4`) and violet (`#a78bfa`) on secondary floating orbs/graph nodes for depth — orange stays dominant everywhere else
 
 ### Typography
 - Display headline font: a bold geometric sans (e.g. Space Grotesk) loaded via Google Fonts `<link>` — no build step required
@@ -44,17 +50,21 @@ Sections alternate dark/light backgrounds to create visual rhythm as the user sc
 
 Content is sourced from the current resume (`Sandeep_Sharma_Updated.docx`). Final section list:
 
-1. **Sticky nav** — logo/wordmark, section links (About, Work, Experience, Contact), resume download button, scroll progress bar
+1. **Sticky nav** — wordmark left, centered pill-shaped nav-link group (Cosmoq pattern: About, Work, Experience, Contact), resume download button right, scroll progress bar
 2. **Hero**
-   - Eyebrow pill: location/title ("Lead AI Engineer · Cork, Ireland")
+   - Aurora-gradient glow background (orange-dominant radial blooms, animated slow breathing/drift) with subtle film-grain texture over near-black
+   - Live WebGL node-graph (Three.js via CDN): a rotating, semi-transparent point cloud with connecting edges, a subset of nodes pulsing orange, all reacting subtly to cursor position — representing a knowledge/RAG graph
+   - Eyebrow pill: availability/title ("Available for Lead AI Engineering roles")
    - Oversized headline: "Sandeep Sharma"
    - Subheadline: adapted from resume professional summary
-   - Stat counters (animate on load/scroll): years of experience (8+), docs in RAG knowledge base (135), constraint rules built (133)
-   - Floating imagery: existing profile photo (from repo `images/`) tilted and floating with slow drift + mouse-parallax, plus 2–3 abstract gradient "tiles" floating at different depths (stand-ins for Alethia's floating rock fragments — there's no real photography for an engineering portfolio), plus one small floating "data readout" card (monospace, referencing real project metrics, echoing Alethia's floating data-tooltip-on-hero-image detail)
+   - 2–3 glossy gradient "orb" elements (radial gradient + specular highlight, Cosmoq-style glass spheres) floating at different depths/scales, replacing flat shapes
+   - A floating monospace "terminal" card that continuously types and cycles through a few real-feeling log lines from the pipeline (e.g. `ranked_lever: switch_supplier`, `Δco2e: -8.4 tCO2e/yr`)
+   - The floating "dashboard preview" signature card (see above), peeking up from the bottom of the hero
    - Circular "scroll to discover" cue
-3. **About** — bio paragraph from resume summary; quick facts (location, current role)
+   - Stat counters (years of experience, docs in RAG knowledge base, constraint rules built) — animate on scroll into the About section below, not crammed into the hero itself
+3. **About** — bio paragraph from resume summary; quick facts (location, current role); this is where the real profile photo (from repo `images/`) appears, tilted and floating with slow drift + mouse-parallax; animated stat counters (8+ years, 135 docs, 133 rules) live here
 4. **Trusted companies strip** — Mavarick, PepsiCo, Johnson Controls, Dell, TCS (wordmark row — honest substitute for the old fake-star testimonials)
-5. **What I Do** — numbered cards (Alethia/agency-reference numbered-feature pattern):
+5. **What I Do** — bento-grid feature cards (Cosmoq pattern: each card has a unique glow/gradient illustration behind numbered title + description, rather than a plain list):
    - 01 GenAI & RAG Pipelines
    - 02 MLOps & Production Deployment
    - 03 Constraint Validation & Compliance
@@ -82,25 +92,33 @@ Content is sourced from the current resume (`Sandeep_Sharma_Updated.docx`). Fina
 
 ## Motion & Interaction
 
-- Scroll-reveal: sections fade + slide up into view via `IntersectionObserver` (no scroll-jank libraries)
+- Hero WebGL node-graph: continuous slow auto-rotation + camera drift, pulsing glow on a subset of nodes, cursor-reactive tilt (Three.js)
+- Aurora background: slow breathing/drift animation (CSS keyframes on a blurred gradient layer)
+- Floating orbs, terminal card, and dashboard-preview card: independent slow CSS float loops (different durations/offsets so they don't move in sync)
+- Terminal card: JS typewriter effect, looping through a few real pipeline log snippets
+- Scroll-reveal: sections fade + slide up into view via `IntersectionObserver`
 - Staggered entrance for skill chips and tag rows
-- Animated count-up for hero stat numbers, triggered once on first scroll into view
-- Floating parallax images: continuous slow float (CSS `@keyframes`) + subtle offset on mouse move (vanilla JS, desktop only — disabled on touch)
+- Animated count-up for stat numbers in the About section, triggered once on first scroll into view
+- Floating parallax images elsewhere on the page (About-section profile photo): continuous slow float (CSS `@keyframes`) + subtle offset on mouse move (vanilla JS, desktop only — disabled on touch)
 - Sticky nav with a scroll-progress bar (fills as the page scrolls)
 - Section eyebrow pills and headline text get a light crossfade/parallax as they scroll past, echoing Alethia's stacked-text transition — applied only at the hero → about boundary to keep it tasteful rather than gimmicky throughout
-- All animations respect `prefers-reduced-motion: reduce` (disable floats/parallax, keep simple opacity fades only)
+- All animations respect `prefers-reduced-motion: reduce` (disable floats/parallax/3D auto-rotation, keep simple opacity fades only; the WebGL canvas itself still renders a static frame rather than fully removing it)
 
 ## Technical Approach
 
-- Plain HTML/CSS/JS — no bundler, no framework, no `node_modules`. Matches the current zero-build GitHub Pages deploy.
+- HTML/CSS/vanilla JS as the base — no bundler, no `node_modules`, no build step. Matches the current zero-build GitHub Pages deploy.
+- CDN-loaded libraries used where they materially improve the result:
+  - **Three.js** (r128, via cdnjs) for the hero node-graph — the one piece that genuinely needs WebGL rather than CSS
+  - No other libraries are anticipated (GSAP was prototyped but plain `IntersectionObserver` + CSS keyframes proved sufficient in the mockups and keeps the dependency surface smaller)
 - File structure (replacing, not patching, the current template):
   - `index.html` — single-page site, all sections
   - `css/style.css` — new stylesheet (old template CSS files removed)
   - `js/main.js` — scroll reveal, parallax, counters, nav behavior (vanilla JS, `IntersectionObserver`)
-  - `images/` — reused: existing profile/about photos. No new binary assets required; gradient "tiles" and data-readout cards are pure CSS/HTML, not images.
+  - `js/hero-graph.js` — Three.js node-graph scene, isolated from the rest of the interaction code
+  - `images/` — reused: existing profile/about photos. No new binary assets required; orbs, aurora, terminal and dashboard-preview cards are pure CSS/HTML, not images.
   - Google Fonts loaded via `<link>` in `<head>` (Space Grotesk or equivalent)
 - Remove unused legacy template assets (`fonts/`, old `css/`, `js/` vendor libraries — Owl Carousel, Magnific Popup, AOS, jQuery, Bootstrap SCSS source, etc.) once the new page no longer depends on them
-- Responsive: mobile-first breakpoints; floating parallax/orbit visuals simplify or stack on small screens
+- Responsive: mobile-first breakpoints; the Three.js canvas, orbs, and dashboard-preview card simplify, shrink, or stack on small screens; the WebGL scene is skipped entirely below a width/capability threshold in favor of the static aurora background, to keep mobile performance solid
 - `single.html` (unused legacy blog template) is deleted — the site is single-page
 
 ## Deployment
