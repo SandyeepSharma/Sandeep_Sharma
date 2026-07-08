@@ -81,6 +81,78 @@
   registerInit(initReveal);
   registerInit(initStagger);
   registerInit(initFooterYear);
+
+  function initHeroTerminal() {
+    var body = document.getElementById('hero-terminal-body');
+    if (!body) return;
+    var logSets = [
+      [
+        { text: '&gt; analyzing_hotspots.py', cls: 'dim' },
+        { text: 'ranked_lever: switch_supplier', cls: '' },
+        { text: '&Delta;co2e: <span class="hl2">-8.4 tCO2e/yr</span>', cls: '' }
+      ],
+      [
+        { text: '&gt; rag_query.py --k=5', cls: 'dim' },
+        { text: 'searching 135 docs...', cls: '' },
+        { text: 'citations: <span class="hl2">5/5 grounded</span>', cls: '' }
+      ],
+      [
+        { text: '&gt; validate_constraints.py', cls: 'dim' },
+        { text: 'checking 133 rules...', cls: '' },
+        { text: 'status: <span class="hl2">FEASIBLE</span>', cls: '' }
+      ]
+    ];
+    var setIdx = 0;
+
+    if (prefersReducedMotion) {
+      body.innerHTML = logSets[0].map(function (l) { return '<div>' + l.text + '</div>'; }).join('');
+      return;
+    }
+
+    function runSet() {
+      body.innerHTML = '';
+      var lines = logSets[setIdx];
+      var li = 0;
+      function typeLine() {
+        if (li >= lines.length) {
+          setTimeout(function () { setIdx = (setIdx + 1) % logSets.length; runSet(); }, 1400);
+          return;
+        }
+        var line = lines[li];
+        var div = document.createElement('div');
+        div.className = line.cls;
+        body.appendChild(div);
+        var raw = line.text;
+        var ci = 0;
+        function step() {
+          ci++;
+          div.innerHTML = raw.slice(0, ci) + '<span class="term-cursor"></span>';
+          if (ci < raw.length) { setTimeout(step, 16); }
+          else { div.innerHTML = raw; li++; setTimeout(typeLine, 260); }
+        }
+        step();
+      }
+      typeLine();
+    }
+    runSet();
+  }
+
+  function initHeroScrollFade() {
+    var hero = document.getElementById('hero');
+    var content = document.querySelector('.hero-content');
+    if (!hero || !content || prefersReducedMotion) return;
+    function update() {
+      var rect = hero.getBoundingClientRect();
+      var progress = Math.min(1, Math.max(0, -rect.top / rect.height));
+      content.style.opacity = String(1 - progress);
+      content.style.transform = 'translateY(' + (progress * 40) + 'px)';
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  }
+
+  registerInit(initHeroTerminal);
+  registerInit(initHeroScrollFade);
   // SECTION: REGISTER_HOOKS
 
   document.addEventListener('DOMContentLoaded', function () {
